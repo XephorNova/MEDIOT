@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<title>Creating a Chat Application in Node JS with Express, MongoDB, Mongoose and Socket.io</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous">
+
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<div class="container">
+    <br>
+    <div class="jumbotron">
+        <h1 class="dispaly-4">Start Chatting</h1>
+        <br>
+        <input id="txtName" class="form-control" placeholder="Name" type="text">
+        <br>
+        <textarea id="txtMessage" class="form-control" placeholder="Message"></textarea>
+        <br>
+        <button id="send" class="btn btn-success">Send</button>
+    </div>
+    <div id="messages"></div>
+</div>
+
+<script>
+    /* $(() => {
+        $("#send").click(() => {
+            var chatMessage = {
+                name: $("#txtName").val(), chat: $("#txtMessage").val()
+            }
+            postChat(chat)
+        })
+    })
+    function postChat(chat){
+        console.log(chat)
+    } */
+
+    document.getElementById('send').addEventListener('click', ()=> {
+        var chatMessage = {
+            name: document.getElementById('txtName').value, message:document.getElementById('txtMessage').value 
+        }
+        console.log(chatMessage)
+        fetch("http://localhost:3020/chats",{
+            method : 'POST',
+            body : JSON.stringify(chatMessage),
+            headers: {
+                'Content-Type' : 'application/json'
+            }
+        }).then(res=>res.json()).then(res=>console.log(res));
+        postChat(chatMessage)
+    })
+    function postChat(chat){
+        console.log(chat)
+        $.ajax({
+            url:"http://localhost:3020/chats",
+            method:"POST",
+            dataType : "JSON",
+            data:JSON.stringify(chat),
+            success:function(data){
+                console.log(data)
+            }
+        })
+    }
+
+    
+</script>
+</body>
